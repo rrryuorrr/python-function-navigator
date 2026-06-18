@@ -1,0 +1,65 @@
+{
+  "name": "python-function-navigator",
+  "displayName": "Python Function Navigator",
+  "description": "Show Python classes and functions in a focused navigator view.",
+  "version": "0.0.1",
+  "publisher": "rrryuorrr",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:python",
+    "onView:pythonFunctionNavigator"
+  ],
+  "main": "./out/src/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rrryuorrr/python-function-navigator.git"
+  },
+  "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "id": "pythonFunctionNavigator",
+          "name": "Python Functions"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "pythonFunctionNavigator.refresh",
+        "title": "Python Function Navigator: Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "pythonFunctionNavigator.revealSymbol",
+        "title": "Python Function Navigator: Reveal Symbol"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "pythonFunctionNavigator.refresh",
+          "when": "view == pythonFunctionNavigator",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node --test out/test/fallbackParser.test.js",
+    "package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.6.2",
+    "typescript": "^5.9.0"
+  }
+}
