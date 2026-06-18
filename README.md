@@ -1,69 +1,71 @@
 # Python Function Navigator
 
-A lightweight VS Code Explorer view for navigating Python classes and
-functions. It uses VS Code document symbols when a Python language server is
-available and falls back to a small indentation-aware parser when it is not.
+Pythonファイル内のクラスや関数へ素早く移動するための、軽量なVS Code拡張機能です。
 
-## Features
+Python言語サーバーが利用できる場合はVS CodeのDocument Symbolを使用し、利用できない場合はインデントを考慮した簡易パーサーへ自動的に切り替わります。
 
-- Lists `class`, `def`, `async def`, methods, constructors, and nested functions.
-- Preserves class and nested-function hierarchy.
-- Jumps to and selects the symbol name when clicked.
-- Refreshes on editor switches and saves.
-- Refreshes 400 ms after edits to avoid work on every keystroke.
-- Supports offline installation from a prebuilt VSIX file.
+## 主な機能
 
-## Screenshot
+- `class`、`def`、`async def`を一覧表示
+- クラス内のメソッド、コンストラクター、ネスト関数を階層表示
+- 一覧の項目をクリックすると、該当するコードへ移動して名前を選択
+- エディターの切り替え時とファイル保存時に自動更新
+- 編集停止から400ミリ秒後に更新し、入力中の負荷を抑制
+- VSIXファイルによるオフラインインストールに対応
 
-Open `test/sample.py` to see a tree similar to:
+## 表示例
+
+`test/sample.py`を開くと、Explorerに次のような一覧が表示されます。
 
 ```text
-Python Functions
-├─ def main
-│  └─ def nested_helper
-├─ class ReportParser
-│  ├─ def __init__
-│  ├─ def parse
-│  └─ def export_csv
-└─ async def load_data
+Python 関数一覧
+|-- def main
+|   `-- def nested_helper
+|-- class ReportParser
+|   |-- def __init__
+|   |-- def parse
+|   `-- async def export_csv
+`-- async def load_data
 ```
 
-## Requirements
+## 動作要件
 
-- VS Code 1.85.0 or newer.
-- The Microsoft Python extension is recommended for high-accuracy symbols.
-  The bundled fallback parser works without it.
+- VS Code 1.85.0以降
+- Microsoft Python拡張機能の導入を推奨
 
-## Offline installation
+Python拡張機能がなくても簡易パーサーで動作しますが、正確なシンボル解析にはPython言語サーバーが必要です。
 
-Copy `python-function-navigator-0.0.1.vsix` to the offline computer, then use
-either method:
+## オフライン環境へのインストール
 
-1. In VS Code, open **Extensions: Install from VSIX...** from the Command
-   Palette and select the file.
-2. From a terminal:
+GitHub Releasesから`python-function-navigator-0.0.1.vsix`をダウンロードし、オフライン環境へコピーしてください。
 
-   ```bash
-   code --install-extension python-function-navigator-0.0.1.vsix
-   ```
+### VS Codeの画面からインストール
 
-The target computer does not need Node.js, npm, or internet access to install
-the VSIX.
+1. コマンドパレットを開きます。
+2. **Extensions: Install from VSIX...**を実行します。
+3. コピーしたVSIXファイルを選択します。
 
-## Usage
+### コマンドでインストール
 
-1. Open a Python file.
-2. Open the Explorer side bar.
-3. Find the **Python Functions** view.
-4. Click a class or function name.
-5. The editor jumps to the selected symbol.
+```bash
+code --install-extension python-function-navigator-0.0.1.vsix
+```
 
-Use the refresh icon in the view title or run
-**Python Function Navigator: Refresh** if a language server is still starting.
+インストール先のPCには、Node.js、npm、インターネット接続は不要です。
 
-## Development
+## 使い方
 
-Node.js 20 or newer and npm are required only on the build computer.
+1. Pythonファイルを開きます。
+2. Explorerサイドバーを開きます。
+3. **Python 関数一覧**ビューを探します。
+4. クラス名または関数名をクリックします。
+5. エディターが該当するコードへ移動します。
+
+一覧を手動更新する場合は、ビュー右上の更新アイコンをクリックするか、コマンドパレットから**Python Function Navigator: 一覧を更新**を実行してください。
+
+## 開発方法
+
+ビルド環境にのみNode.js 20以降とnpmが必要です。
 
 ```bash
 npm install
@@ -71,12 +73,11 @@ npm run compile
 npm test
 ```
 
-Press `F5` in VS Code to launch an Extension Development Host with
-`test/sample.py`.
+VS Codeで`F5`を押すと、`test/sample.py`を開いたExtension Development Hostが起動します。
 
-## Packaging
+## VSIXの作成
 
-Install dependencies once on an internet-connected build computer:
+インターネットへ接続できるビルド環境で、依存パッケージをインストールしてからパッケージを作成します。
 
 ```bash
 npm install
@@ -85,46 +86,44 @@ npm test
 npm run package
 ```
 
-The package command creates `python-function-navigator-0.0.1.vsix`. Keep this
-file as the offline distribution artifact.
+`python-function-navigator-0.0.1.vsix`が生成されます。このファイルをオフライン配布用に保管してください。
 
-## Verification
+## 検証
 
-The included `test/sample.py` covers:
+付属の`test/sample.py`には次のケースが含まれています。
 
-- a top-level function;
-- a nested function;
-- a class with constructor and methods;
-- an async method;
-- an async top-level function.
+- トップレベル関数
+- ネスト関数
+- コンストラクターとメソッドを持つクラス
+- 非同期メソッド
+- トップレベルの非同期関数
 
-`npm test` validates fallback parsing. For UI verification, press `F5`, open
-the Explorer view, click each symbol, then add or rename a function and confirm
-the view refreshes after editing or saving.
+`npm test`で簡易パーサーの動作を検証できます。
 
-## Limitations
+画面操作を確認する場合は、VS Codeで`F5`を押してExplorerを開き、各シンボルをクリックしてください。関数の追加や名前変更を行い、編集または保存後に一覧が更新されることも確認してください。
 
-- The fallback parser is intentionally lightweight. It does not fully parse
-  Python strings, decorators, or every multiline declaration.
-- Complete argument lists and docstrings are not displayed.
-- Cross-file search and call/import analysis are outside the initial scope.
-- Python is the only supported language in version 0.0.1.
+## 制限事項
 
-## Troubleshooting
+- 簡易パーサーは、Pythonの文字列、デコレーター、複雑な複数行宣言を完全には解析しません。
+- 引数一覧やdocstringは表示しません。
+- 複数ファイル横断検索、関数呼び出し解析、import依存関係解析には対応していません。
+- バージョン0.0.1ではPythonのみ対応しています。
 
-### No functions are shown
+## トラブルシューティング
 
-- Confirm the editor language mode is **Python**.
-- Install or enable a Python extension for more accurate document symbols.
-- Run **Python Function Navigator: Refresh**.
-- If no provider is available, save the file and the fallback parser is used.
+### 関数一覧が表示されない
 
-### The VSIX cannot be installed
+- エディター右下の言語モードが**Python**になっているか確認してください。
+- より正確な解析が必要な場合は、Microsoft Python拡張機能を導入または有効化してください。
+- **Python Function Navigator: 一覧を更新**を実行してください。
+- Python言語サーバーが利用できない場合は、ファイルを保存すると簡易パーサーが使用されます。
 
-- Confirm VS Code is version 1.85.0 or newer.
-- Recopy the VSIX in case the file was corrupted.
-- Use the absolute path with `code --install-extension`.
+### VSIXをインストールできない
 
-## License
+- VS Codeが1.85.0以降であることを確認してください。
+- VSIXファイルを再コピーし、破損していないか確認してください。
+- コマンドで導入する場合は、VSIXの絶対パスを指定してください。
 
-MIT
+## ライセンス
+
+MIT License

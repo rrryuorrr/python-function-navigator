@@ -1,9 +1,9 @@
-# Changelog
+# 変更履歴
 
 ## 0.0.1
 
-- Initial release.
-- Show Python classes, functions, methods, constructors, and nested functions.
-- Jump from the Explorer tree to a selected symbol.
-- Refresh automatically after editor changes, saves, and editor switches.
-- Fall back to a lightweight indentation-aware parser when document symbols are unavailable.
+- 初回リリース
+- Pythonのクラス、関数、メソッド、コンストラクター、ネスト関数を一覧表示
+- Explorerの一覧から選択したシンボルへ移動
+- 編集、保存、エディター切り替え後に一覧を自動更新
+- Document Symbolを利用できない場合に、インデントを考慮した軽量な簡易パーサーを使用

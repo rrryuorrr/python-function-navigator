@@ -1,7 +1,7 @@
 {
   "name": "python-function-navigator",
   "displayName": "Python Function Navigator",
-  "description": "Show Python classes and functions in a focused navigator view.",
+  "description": "Pythonのクラスや関数を一覧表示し、選択したコードへ素早く移動します。",
   "version": "0.0.1",
   "publisher": "rrryuorrr",
   "license": "MIT",
@@ -25,19 +25,19 @@
       "explorer": [
         {
           "id": "pythonFunctionNavigator",
-          "name": "Python Functions"
+          "name": "Python 関数一覧"
         }
       ]
     },
     "commands": [
       {
         "command": "pythonFunctionNavigator.refresh",
-        "title": "Python Function Navigator: Refresh",
+        "title": "Python Function Navigator: 一覧を更新",
         "icon": "$(refresh)"
       },
       {
         "command": "pythonFunctionNavigator.revealSymbol",
-        "title": "Python Function Navigator: Reveal Symbol"
+        "title": "Python Function Navigator: シンボルへ移動"
       }
     ],
     "menus": {
